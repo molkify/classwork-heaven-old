@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BMN3YW6V8Y"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-BMN3YW6V8Y');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classes</title>
+<link rel="shortcut icon" href="data:image/vnd.microsoft.icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABsklEQVQYV6WPMY9MYRSGnzO5K5mrsczINCujkBh3ihU1CX9BMSsKtqTQ6mzDr5BFQiLRSkRoFRu7icIQ3YoCESHL3DEbmfMqzjc3d1BxmvPlS97nPK9J4n8mm75Yvsz00zkzYTYPkwypAbJ4e2xkyBuw0LpvPzfaMpURrgMUAIhgBZGBGgGznIzpGMx4OW7xatLGbBYGJJTecoHHu2h+pZ/vgP8gQ4YQw3GbB1+OQgIgkS80kYvR7igBHLkzaImi+Q1kZKEJuJB71WDvnpy1M1dBsPb0BqNJiWpGqSWN6GRJ05ELubiwvEJ33xLdxSVWT5xHVRclw8ilCoY89STwt7fu0V08BMD687thKM1biKhgM3CtwmhScu3xdSRR7pZVuPInDicDknoA+p0eRecY/U4PgOGH12y83WT783aAHDSrIBlAquBcOXmJ00dOUZ+i02Nw/CwPh4+4+exWfMqQjExuYIDC4vdwfQ7v786FEWSoAYiiucPgwDuGb9bnQlVloCw/stJ+T5F/j4MyrHxyUKCw+NsIIK4pbbAAy8gkWwUu2uzSDKT6+jMIINkdU93xH+YXTrImgXmBBtYAAAAASUVORK5CYII=">
+<meta property="og:title" content="classwork heaven.">
+  <meta name="theme-color" content="#000000">
+  <meta name="msapplication-TileColor" content="#000000">
+  <meta property="og:image" content="https://classwork.cc/wp-content/uploads/2023/07/512LOGO.webp">
+  <meta name="description" content="classwork heaven: a site for learning!">
+  <meta name="og:description" content="classwork heaven: a site for learning!">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2049642710859825"
+     crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<link href="/style.css" rel="stylesheet" type="text/css" />
+  </head>
+<body>
+  <style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: black;
+    }
+
+    canvas {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+</style>
+  <canvas id="canvas" width="677" height="616"></canvas>
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = document.documentElement.scrollHeight;
+
+    let particlesArray;
+
+    class Particle {
+        constructor(x, y, directionX, directionY, size, color) {
+            this.x = x;
+            this.y = y;
+            this.directionX = directionX;
+            this.directionY = directionY;
+            this.size = size;
+            this.color = color;
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+        }
+
+        update() {
+            if (this.x + this.size > canvas.width || this.x - this.size < 0) {
+                this.directionX = -this.directionX;
+            }
+            if (this.y + this.size > canvas.height || this.y - this.size < 0) {
+                this.directionY = -this.directionY;
+            }
+            this.x += this.directionX;
+            this.y += this.directionY;
+            this.draw();
+        }
+    }
+
+    function init() {
+        particlesArray = [];
+        const numberOfParticles = 100;
+        for (let i = 0; i < numberOfParticles; i++) {
+            const size = Math.random() * 5 + 1;
+            const x = Math.random() * (innerWidth - size * 2) + size;
+            const y = Math.random() * (canvas.height - size * 2) + size;
+            const directionX = (Math.random() - 0.5) * 0.5;
+            const directionY = (Math.random() - 0.5) * 0.5;
+            const color = 'white';
+
+            particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+        }
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, innerWidth, canvas.height);
+
+        for (let i = 0; i < particlesArray.length; i++) {
+            particlesArray[i].update();
+        }
+    }
+
+    init();
+    animate();
+
+    window.addEventListener('resize', function () {
+        canvas.width = window.innerWidth;
+        canvas.height = document.documentElement.scrollHeight;
+        init();
+    });
+
+    canvas.addEventListener('click', function (event) {
+        const size = Math.random() * 5 + 1;
+        const x = event.clientX;
+        const y = event.clientY;
+        const directionX = (Math.random() - 0.5) * 0.5;
+        const directionY = (Math.random() - 0.5) * 0.5;
+        const color = 'white';
+
+        particlesArray.push(new Particle(x, y, directionX, directionY, size,color));
+    });
+</script>
+<br>
+<center>
+<header>
+<button class="white" onclick="window.location.href='/index.html';">Home</button>
+•
+<button class="white" onclick="window.location.href='https://google.com';">Panic</button>
+</header>
+<center>
+<iframe src="/semag-code/bitlife/index.html"  width="900" height="700">
+  </iframe>
+  </center>
+</center>
+</div>
+</body>
+</html>
